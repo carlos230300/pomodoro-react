@@ -14,7 +14,7 @@ import { showMessage } from "../../adapters/showMessage";
 import { TaskActionTypes } from "../../contexts/TaskContext/taskActions";
 
 export function History() {
-  const { state, dispatch} = useTaskContext();
+  const { state, dispatch } = useTaskContext();
   const [confirmClearHistory, setConfirmClearHistory] = useState(false);
   const hasTasks = state.tasks.length > 0;
 
@@ -40,18 +40,22 @@ export function History() {
   }, [state.tasks]);
 
   useEffect(() => {
+    document.title = "Histórico - Chronos Pomodoro";
+  }, []);
+
+  useEffect(() => {
     if (!confirmClearHistory) return;
 
-    console.log('APAGAR histórico');
+    console.log("APAGAR histórico");
     setConfirmClearHistory(false);
 
-    dispatch( { type: TaskActionTypes.RESET_STATE});
+    dispatch({ type: TaskActionTypes.RESET_STATE });
   }, [confirmClearHistory, dispatch]);
 
   useEffect(() => {
     return () => {
       showMessage.dismiss();
-    }
+    };
   }, []);
 
   function handleSortTasks({ field }: Pick<SortTasksOptions, "field">) {
@@ -82,7 +86,7 @@ export function History() {
     <MainTemplate>
       <Container>
         <Heading>
-          <span>Histórico</span>
+          <span>History</span>
           {hasTasks && (
             <span className={styles.buttonContainer}>
               <DefaultButton
@@ -158,4 +162,3 @@ export function History() {
     </MainTemplate>
   );
 }
-
